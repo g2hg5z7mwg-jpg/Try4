@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reel Prompt Studio</title>
+<style>
+:root{--ink:#24213b;--muted:#716d86;--bg:#f7f5ff;--card:#fff;--purple:#7657df;--pink:#ff8db5;--line:#e9e4f5;--mint:#dff8ef;--shadow:0 12px 35px rgba(49,35,92,.08)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f8f5ff,#fff7fa 55%,#f1fbfa);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+header{padding:30px 5vw 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--purple),var(--pink));display:grid;place-items:center;color:white;font-size:23px;box-shadow:var(--shadow)}
+h1{font-size:clamp(24px,4vw,34px);margin:0;letter-spacing:-1px}.sub{color:var(--muted);margin:4px 0 0;font-size:14px}
+.tag{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 14px;color:#625a82;font-size:12px;font-weight:700}
+main{max-width:1120px;margin:0 auto;padding:8px 5vw 55px}.intro{padding:22px 24px;background:linear-gradient(110deg,#ede7ff,#fff0f6);border-radius:22px;margin-bottom:22px}
+.intro h2{margin:0 0 7px;font-size:21px}.intro p{margin:0;color:#625c79;line-height:1.55;font-size:14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tab{border:1px solid var(--line);background:white;color:#625b7b;padding:11px 16px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--ink);color:white;border-color:var(--ink)}
+.panel{display:none}.panel.active{display:block}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.82fr);gap:20px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 17px;font-size:18px}.field{margin:0 0 15px}.field label{display:block;font-size:12px;font-weight:800;color:#625b7b;margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #ded8ee;border-radius:11px;background:#fff;color:var(--ink);font:inherit;font-size:14px;outline:none}
+textarea{min-height:88px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #7657df1c}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:800;cursor:pointer;background:var(--purple);color:white;box-shadow:0 7px 16px #7657df30}.btn:hover{filter:brightness(1.05)}.btn.secondary{background:#f0ecfb;color:#5c49a5;box-shadow:none}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.output{background:#fbfaff;border:1px dashed #d9d0ee;border-radius:15px;padding:17px;min-height:160px;white-space:pre-wrap;line-height:1.55;font-size:13px;color:#514a6d}
+.output h4{margin:0 0 10px;color:var(--ink)}.hint{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0 0}.swatches{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.swatch{width:78px;height:68px;border-radius:13px;display:flex;align-items:end;padding:7px;color:white;font-size:10px;font-weight:800;text-shadow:0 1px 4px #0008}
+.preview{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}.preview-banner{height:115px;background:linear-gradient(120deg,#7657df,#ff8db5);display:grid;place-items:center;color:white;font-size:30px;font-weight:900}.preview-body{padding:17px}.preview-body strong{font-size:18px}.preview-body p{color:var(--muted);font-size:12px;margin:6px 0 0}
+footer{text-align:center;color:#8b849e;font-size:12px;padding:0 20px 28px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}header{padding-top:22px}.card{padding:18px}.two{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.two{grid-template-columns:1fr}.intro{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">▶</div><div><h1>Reel Prompt Studio</h1><p class="sub">Plan it. Prompt it. Make it yours.</p></div></div>
+ <span class="tag">✦ STUDENT CREATOR TOOL</span>
+</header>
+<main>
+ <section class="intro"><h2>Your idea, ready for the camera.</h2><p>Build a short-form video plan, turn it into a clear production prompt, and create a mini brand kit. Everything runs right here in your browser — no account, API, or internet connection needed.</p></section>
+ <nav class="tabs" aria-label="Studio sections">
+  <button class="tab active" data-tab="planner">🎬 Video planner</button>
+  <button class="tab" data-tab="prompt">✍️ Prompt builder</button>
+  <button class="tab" data-tab="brandkit">🎨 Brand kit</button>
+ </nav>
+
+ <section class="panel active" id="planner">
+  <div class="layout">
+   <div class="card"><h3>01 / Plan your reel</h3>
+    <div class="field"><label for="topic">VIDEO IDEA</label><input id="topic" placeholder="e.g. 3 ways to study smarter"></div>
+    <div class="two">
+     <div class="field"><label for="platform">PLATFORM</label><select id="platform"><option>TikTok</option><option>Instagram Reels</option><option>YouTube Shorts</option></select></div>
+     <div class="field"><label for="duration">LENGTH</label><select id="duration"><option>15 seconds</option><option selected>30 seconds</option><option>45 seconds</option><option>60 seconds</option></select></div>
+    </div>
+    <div class="two">
+     <div class="field"><label for="style">VIDEO STYLE</label><select id="style"><option>Fun and energetic</option><option>Calm and aesthetic</option><option>Educational</option><option>Storytelling</option><option>Mini vlog</option></select></div>
+     <div class="field"><label for="audience">AUDIENCE</label><input id="audience" placeholder="e.g. students"></div>
+    </div>
+    <div class="field"><label for="goal">MAIN GOAL</label><select id="goal"><option>Teach something useful</option><option>Entertain viewers</option><option>Share a story</option><option>Promote an idea or project</option><option>Inspire people</option></select></div>
+    <div class="field"><label for="details">KEY DETAILS (OPTIONAL)</label><textarea id="details" placeholder="What should viewers learn, see, or remember?"></textarea></div>
+    <button class="btn" id="makePlan">Generate video plan ✨</button>
+   </div>
+   <div class="card"><h3>02 / Your production plan</h3><div class="output" id="planOutput" aria-live="polite">Your storyboard will appear here. Add an idea and select “Generate video plan”.</div><div class="actions"><button class="btn secondary" id="copyPlan">Copy plan</button><button class="btn secondary" id="downloadPlan">Download .txt</button></div><p class="hint">Tip: Keep the opening interesting, make each shot easy to film, and finish with one clear call to action.</p></div>
+  </div>
+ </section>
+
+ <section class="panel" id="prompt">
+  <div class="layout">
+   <div class="card"><h3>03 / Build a production prompt</h3>
+    <div class="field"><label for="promptIdea">WHAT IS THE VIDEO ABOUT?</label><textarea id="promptIdea" placeholder="Describe your video in one or two sentences."></textarea></div>
+    <div class="field"><label for="visuals">VISUAL DIRECTION</label><select id="visuals"><option>Bright, colorful, and lively</option><option>Soft light and pastel colors</option><option>Clean, minimal, and modern</option><option>Cinematic with dramatic lighting</option><option>Handheld, natural, and realistic</option></select></div>
+    <div class="field"><label for="audio">AUDIO</label><select id="audio"><option>Upbeat background music</option><option>Calm instrumental music</option><option>Voiceover with quiet music</option><option>Natural sounds only</option><option>Talking directly to camera</option></select></div>
+    <div class="field"><label for="editing">EDITING STYLE</label><select id="editing"><option>Quick cuts and captions</option><option>Smooth transitions</option><option>Slow, cinematic pacing</option><option>Simple cuts with clear labels</option></select></div>
+    <div class="field"><label for="mustInclude">MUST INCLUDE</label><input id="mustInclude" placeholder="e.g. title card, 3 tips, final reminder"></div>
+    <button class="btn" id="makePrompt">Create production prompt ✨</button>
+   </div>
+   <div class="card"><h3>04 / Copy-ready prompt</h3><div class="output" id="promptOutput">Your detailed video production prompt will appear here.</div><div class="actions"><button class="btn secondary" id="copyPrompt">Copy prompt</button><button class="btn secondary" id="downloadPrompt">Download .txt</button></div><p class="hint">This is a planning prompt. You can use it as a guide when filming or editing your video.</p></div>
+  </div>
+ </section>
+
+ <section class="panel" id="brandkit">
+  <div class="layout">
+   <div class="card"><h3>05 / Design your mini brand kit</h3>
+    <div class="field"><label for="brandName">CREATOR / CHANNEL NAME</label><input id="brandName" placeholder="e.g. Study Bloom"></div>
+    <div class="field"><label for="tagline">TAGLINE</label><input id="tagline" placeholder="e.g. Little ideas, big progress"></div>
+    <div class="two">
+     <div class="field"><label for="mood">BRAND MOOD</label><select id="mood"><option value="pastel">Soft pastel</option><option value="bold">Bold and bright</option><option value="earth">Natural and warm</option><option value="mono">Modern minimal</option></select></div>
+     <div class="field"><label for="symbol">ICON / SYMBOL</label><select id="symbol"><option>✦ Sparkle</option><option>♡ Heart</option><option>☀ Sun</option><option>🌿 Leaf</option><option>▶ Play</option><option>★ Star</option></select></div>
+    </div>
+    <div class="field"><label for="fontStyle">FONT FEEL</label><select id="fontStyle"><option>Friendly and rounded</option><option>Clean and modern</option><option>Elegant and simple</option><option>Playful and bold</option></select></div>
+    <button class="btn" id="makeBrand">Generate brand kit ✨</button>
+   </div>
+   <div class="card"><h3>06 / Your brand preview</h3>
+    <div class="preview"><div class="preview-banner" id="brandBanner">✦</div><div class="preview-body"><strong id="brandTitle">Your Creator Name</strong><p id="brandTagline">Your tagline goes here</p></div></div>
+    <div class="swatches" id="swatches"></div>
+    <div class="output" id="brandOutput">Your color palette and brand notes will appear here.</div>
+    <div class="actions"><button class="btn secondary" id="copyBrand">Copy brand kit</button><button class="btn secondary" id="downloadBrand">Download .txt</button></div>
+   </div>
+  </div>
+ </section>
+</main>
+<footer>Made for creative learning · All planning happens locally in your browser.</footer>
+<script>
+const $=id=>document.getElementById(id);
+let planText="",promptText="",brandText="";
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
+ document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===btn.dataset.tab));
+}));
+function value(id,fallback=""){return $(id).value.trim()||fallback}
+function saveText(text,name){const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+async function copyText(text){if(!text){alert("Generate your content first.");return}try{await navigator.clipboard.writeText(text);alert("Copied to clipboard!")}catch(e){alert("Copy is not available here. You can select the text and copy it.")}}
+$("makePlan").addEventListener("click",()=>{
+ const topic=value("topic","My video idea"),platform=value("platform"),duration=value("duration"),style=value("style"),audience=value("audience","people interested in this topic"),goal=value("goal"),details=value("details","Keep the message simple and easy to remember.");
+ const plan=[
+ `VIDEO: ${topic}`,`PLATFORM: ${platform} · ${duration}`,`STYLE: ${style}`,`AUDIENCE: ${audience}`,`GOAL: ${goal}`,"",
+ "STORYBOARD",
+ "1. HOOK (first 0–3 seconds) — Start with a question, surprising fact, or bold on-screen title connected to the topic.",
+ "2. INTRO (next 3–6 seconds) — Introduce the idea and tell viewers what they will get from watching.",
+ "3. MAIN SHOTS — Show 2–3 short examples or steps. Use close-ups, clear actions, and readable captions.",
+ "4. WRAP-UP — Repeat the most important point in one short sentence.",
+ "5. CALL TO ACTION — Invite viewers to save, share, comment, or try the idea.",
+ "",
+ "PRODUCTION CHECKLIST",
+ "□ Record in portrait format (9:16).",
+ "□ Use bright, clear lighting and steady framing.",
+ "□ Add captions so the message is easy to follow.",
+ "□ Keep music lower than spoken words.",
+ "□ Check spelling, sound, and timing before posting.",
+ "",`EXTRA DETAILS: ${details}`
+ ];
+ planText=plan.join("\n");$("planOutput").textContent=planText;
+});
+$("makePrompt").addEventListener("click",()=>{
+ const idea=value("promptIdea","Create a short, engaging video about a useful student-friendly topic."),visuals=value("visuals"),audio=value("audio"),editing=value("editing"),must=value("mustInclude","A clear opening, useful main points, captions, and a closing message");
+ promptText=`Create a short-form vertical video (9:16) based on this idea: ${idea}\n\nVISUAL DIRECTION\n${visuals}. Use clear framing, consistent visuals, and uncluttered backgrounds.\n\nSTRUCTURE\nOpen with an attention-grabbing hook. Introduce the topic quickly, develop the main idea in a few easy-to-follow shots, and end with a memorable takeaway.\n\nAUDIO\n${audio}. Make sure speech is clear and the sound supports the message.\n\nEDITING\n${editing}. Add readable on-screen captions and keep transitions purposeful.\n\nMUST INCLUDE\n${must}.\n\nFINAL CHECK\nKeep the video appropriate for its intended audience, fact-check information, use original or properly permitted media, and make the final result clear, engaging, and easy to understand.`;
+ $("promptOutput").textContent=promptText;
+});
+const palettes={
+ pastel:[["Lavender","#8D79D6"],["Blush","#F2A7C4"],["Cream","#FFF0D9"],["Sage","#A9C9B5"],["Ink","#343047"]],
+ bold:[["Violet","#6236D9"],["Coral","#FF6B65"],["Yellow","#FFD45C"],["Blue","#38A6D8"],["Ink","#24213B"]],
+ earth:[["Forest","#486B50"],["Clay","#C87958"],["Sand","#E8D6B5"],["Olive","#A7A36A"],["Brown","#49392F"]],
+ mono:[["Black","#292929"],["Charcoal","#55515C"],["Grey","#AAA7B0"],["Silver","#D9D7DE"],["White","#F5F4F7"]]
+};
+$("makeBrand").addEventListener("click",()=>{
+ const name=value("brandName","My Creator Brand"),tag=value("tagline","Ideas worth sharing"),mood=value("mood"),symbol=value("symbol"),font=value("fontStyle"),colors=palettes[mood];
+ $("brandBanner").textContent=symbol;$("brandTitle").textContent=name;$("brandTagline").textContent=tag;
+ $("brandBanner").style.background=`linear-gradient(120deg,${colors[0][1]},${colors[1][1]})`;
+ $("brandTitle").style.fontFamily=font.includes("rounded")?"ui-rounded,system-ui":font.includes("modern")?"Arial,sans-serif":"Georgia,serif";
+ $("swatches").innerHTML=colors.map(c=>`<div class="swatch" style="background:${c[1]}"><span>${c[0]}<br>${c[1]}</span></div>`).join("");
+ brandText=`BRAND NAME: ${name}\nTAGLINE: ${tag}\nMOOD: ${$("mood").selectedOptions[0].text}\nSYMBOL: ${symbol}\nFONT FEEL: ${font}\n\nCOLOR PALETTE\n`+colors.map(c=>`${c[0]}: ${c[1]}`).join("\n")+`\n\nBRAND NOTES\nUse ${colors[0][0]} as the main brand color, ${colors[1][0]} as an accent, and keep layouts consistent. Repeat the chosen symbol and font style across profile images, title cards, and video captions.`;
+ $("brandOutput").textContent=brandText;
+});
+$("copyPlan").onclick=()=>copyText(planText);$("downloadPlan").onclick=()=>planText?saveText(planText,"reel-video-plan.txt"):alert("Generate your plan first.");
+$("copyPrompt").onclick=()=>copyText(promptText);$("downloadPrompt").onclick=()=>promptText?saveText(promptText,"reel-production-prompt.txt"):alert("Create your prompt first.");
+$("copyBrand").onclick=()=>copyText(brandText);$("downloadBrand").onclick=()=>brandText?saveText(brandText,"reel-brand-kit.txt"):alert("Generate your brand kit first.");
+</script>
+</body>
+</html>
